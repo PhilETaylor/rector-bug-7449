@@ -1,10 +1,15 @@
 on: [push, pull_request]
 name: rector
 jobs:
-  rector:
-    name: Rector
+  rector-ci:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - name: Rector
-        uses: zingimmick/rector-action@0.0.2
+      -
+        uses: actions/checkout@v2
+      -
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: 8.1
+          coverage: none
+      -   run: composer install --no-progress --ansi
+      -   run: vendor/bin/rector process --ansi
